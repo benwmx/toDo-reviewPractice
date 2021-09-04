@@ -124,3 +124,10 @@ export const removeTask = (tasks, id) => {
   showList(tasks);
   return tasks;
 };
+
+export const updateAndShowTasks = (tasks, id, completed) => {
+  tasks = getLocalStorage();
+  updateStatus(tasks, id, completed);
+  showList(tasks);
+  updateLocalStorage(tasks);
+};

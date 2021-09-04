@@ -4,11 +4,8 @@ import './style-src.css';
 import Sortable from 'sortablejs';
 import {
   showList, updateLocalStorage, addTask, editTask, updateStatus,
-} from './task.js';
-
-import {
   getLocalStorage, updateAfterDrag, removeCompletedTasks, removeTask,
-} from './storage.js';
+} from './task.js';
 
 let tasks = getLocalStorage();
 
@@ -19,16 +16,10 @@ const clearAllButton = document.getElementById('clear-list');
 listDiv.addEventListener('click', (event) => {
   if (event.target !== event.currentTarget) {
     if (event.target.className === 'check') {
-      tasks = getLocalStorage();
-      updateStatus(tasks, parseInt(event.target.parentElement.parentElement.id, 10), true);
-      showList(tasks);
-      updateLocalStorage(tasks);
+updateAndShowTasks(tasks, parseInt(event.target.parentElement.parentElement.id, 10), true);
     }
     if (event.target.className === 'fas fa-check') {
-      tasks = getLocalStorage();
-      updateStatus(tasks, parseInt(event.target.parentElement.parentElement.id, 10), false);
-      showList(tasks);
-      updateLocalStorage(tasks);
+      updateAndShowTasks(tasks, parseInt(event.target.parentElement.parentElement.id, 10), false);
     }
     if (event.target.className === 'fas fa-trash') {
       tasks = getLocalStorage();

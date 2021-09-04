@@ -3,7 +3,7 @@
 import './style-src.css';
 import Sortable from 'sortablejs';
 import {
-  showList, updateLocalStorage, addTask, editTask, updateStatus,
+  showList, updateLocalStorage, addTask, editTask, updateAndShowTasks,
   getLocalStorage, updateAfterDrag, removeCompletedTasks, removeTask,
 } from './task.js';
 
@@ -16,7 +16,7 @@ const clearAllButton = document.getElementById('clear-list');
 listDiv.addEventListener('click', (event) => {
   if (event.target !== event.currentTarget) {
     if (event.target.className === 'check') {
-updateAndShowTasks(tasks, parseInt(event.target.parentElement.parentElement.id, 10), true);
+      updateAndShowTasks(tasks, parseInt(event.target.parentElement.parentElement.id, 10), true);
     }
     if (event.target.className === 'fas fa-check') {
       updateAndShowTasks(tasks, parseInt(event.target.parentElement.parentElement.id, 10), false);

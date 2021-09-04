@@ -39,7 +39,7 @@ export const showList = (tasksList) => {
   }
 };
 
-export const updateStorage = (storage) => {
+export const updateLocalStorage = (storage) => {
   localStorage.setItem('storage', JSON.stringify(storage));
 };
 
@@ -73,7 +73,7 @@ export const editTask = (tasks, target) => {
     removeButton.classList.remove('d-none');
     input.classList.add('d-none');
     target.classList.remove('d-none');
-    updateStorage(tasks);
+    updateLocalStorage(tasks);
     showList(tasks);
   });
 };
@@ -88,4 +88,39 @@ export const updateStatus = (list, id, completed) => {
   list.forEach((task) => {
     if (task.index === id) task.completed = completed;
   });
+};
+
+export const getLocalStorage = () => {
+  const storage = JSON.parse(localStorage.getItem('storage'));
+  return (storage !== null) ? storage : [];
+};
+
+export const updateAfterDrag = (container) => {
+  const listOfElements = container.children;
+  const tasks = getLocalStorage();
+  const orderedTasks = [];
+  Array.from(listOfElements).forEach((element) => {
+    const id = parseInt(element.id, 10);
+    const index = tasks.findIndex((task) => task.index === id);
+    orderedTasks.push(tasks[index]);
+  });
+  orderTasks(orderedTasks);
+  updateLocalStorage(orderedTasks);
+  showList(orderedTasks);
+};
+
+export const removeCompletedTasks = (tasks) => {
+  tasks = tasks.filter((task) => task.completed === false);
+  orderTasks(tasks);
+  updateLocalStorage(tasks);
+  showList(tasks);
+  return tasks;
+};
+
+export const removeTask = (tasks, id) => {
+  tasks = tasks.filter((task) => task.index !== id);
+  orderTasks(tasks);
+  updateLocalStorage(tasks);
+  showList(tasks);
+  return tasks;
 };
